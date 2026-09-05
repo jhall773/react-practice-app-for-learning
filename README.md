@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts. EXPLANATIONS FROM THE AUTHOR OF "Create React App" (rickhanlonii), NOT ME (jhall773).
+## Available Scripts. EXPLANATIONS BELOW ARE FROM THE AUTHOR OF "Create React App" (rickhanlonii) themselves, NOT ME (jhall773).
 
 In the project directory, you can run:
 
