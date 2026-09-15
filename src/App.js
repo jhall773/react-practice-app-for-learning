@@ -1,13 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
-import Message from './components/Messages';
-import User from './components/User';
-import Child from './components/Child';
+import { Routes, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import MessagesPage from './pages/MessagesPage';
+import UsersPage from './pages/UsersPage';
 import { useState } from "react";
 
 function App() {
   // useState variables
-  const [darkMode, setDarkMode] = useState(true);
+  const [headerMode, setHeaderMode] = useState(true);
 
   const [backdropColor, setBackdrop] = useState(true);
 
@@ -35,11 +36,12 @@ function App() {
   const [showMessage, setShowMessage] = useState(true);
 
 
-  // Event for 'Warm-Up Add' Button in return
+  // Event for 'Warm-Up Add' Button in UserList.js Component
   function addWarmUpUser() {
+    const warmUpUserLen = users.filter(user => user.name.includes("Warm-Up")).length
     const newUser = {
       id: crypto.randomUUID(),
-      name: "Warm-Up User " + (users.length + 1)
+      name: "Warm-Up User " + (warmUpUserLen + 1)
     };
     setUsers([...users, newUser]);
     /* NOTE: '...' means: "Make a brand new array containing all the old users, plus the new one."
@@ -49,12 +51,12 @@ function App() {
     */
   }
 
-  // Event for 'Warm-Up Delete All' Button in return
+  // Event for 'Warm-Up Delete All' Button in UserList.js Component
   function deleteAllWarmUp() {
     setUsers(users.filter(user => !user.name.includes("Warm-Up")))
   }
 
-  // Event for 'Delete' Button in User.js User() component (used in the return to map users as User components)
+  // Event for 'Delete' Button in User.js component (used in the return to map users as User components)
   function deleteUser(id) {
     setUsers(users.filter(user => user.id !== id));
   }
@@ -65,7 +67,7 @@ function App() {
     setCount(count + 1);
   }
 
-  // Event for 'Add User' Submit Form Button in return
+  // Event for 'Add User' Submit Form Button in UserLists.js Component
   function handleUserSubmit(e) {
     e.preventDefault(); // stops page reload
 
@@ -78,14 +80,13 @@ function App() {
     setNameInput(""); // clear input
   }
 
-  // Event for 'Add Message' Submit Form Button in return
+  // Event for 'Enter Msg' Submit Form Button in MessageBox.js Component, which calls the InputMessage.js Component
   function handleMsgSubmit(e) {
     e.preventDefault(); // stops page reload
 
-    setMessage("Your Entered the Message: " + messageInput) // variable 'message' is defined at the top of function App() with other 'useState' variables
+    setMessage("Your Entered the Message: " + messageInput) // variable 'message' and 'setMessage' function is defined at the top of function App() with other 'useState' variables
     setMessageInput(""); // clear input
   }
-
 
   /* More useState variables */
   const [count, setCount] = useState(0);
@@ -97,88 +98,42 @@ function App() {
 
   const [messageInput, setMessageInput] = useState("");
 
+  /* Functions Used by Header.js to trigger events for the 'Toggle Header Color' 'Toggle Header Message' and 'Toggle Warm-Up Background' Buttons */
+  function toggleMessage() {
+    setShowMessage(!showMessage);
+  }
+
+  function toggleHeaderMode() {
+    setHeaderMode(!headerMode);
+  }
+
+  function toggleBackdrop() {
+    setBackdrop(!backdropColor);
+  }
+
 
   return (
-    <div className="App"
-      style={{
-          backgroundColor: backdropColor ? "DodgerBlue" : "LimeGreen",
-          minHeight: "120vh"
-        }}
-    >
-      <button onClick={() => setShowMessage(!showMessage)}>
-        Toggle Header Message
-      </button>
-
-      <header className={darkMode ? "App-header" : "App-header-light"}>
-        {showMessage && <h2>Hello Joseph! React Day 3!</h2>}
-      </header>
-      
-      <button onClick={() => setDarkMode(!darkMode)}>
-        Toggle Header Color
-      </button>
-
-      <button onClick={() => setBackdrop(!backdropColor)}>
-          Warm-Up Toggle Background
-      </button>
-
-      <p>Count: {count}</p>
-      
-      {/* Form Submits for UserIn Name ('Add User' button) and Message ('Change Msg' button)*/}
-      <form onSubmit={handleUserSubmit}>
-        <input
-          value={nameInput}
-          onChange={(e) => setNameInput(e.target.value)}
+    <div>
+      <nav>
+          <Link to="/">Home</Link>
+          <Link to="/users">Users</Link>
+          <Link to="/messages">Messages</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<HomePage headerMode={headerMode} showMessage={showMessage} backdropColor={backdropColor} toggleMessage={toggleMessage} toggleHeaderMode={toggleHeaderMode} 
+                                          toggleBackdrop={toggleBackdrop} count={count} handleClick={handleClick}
+          />} 
         />
-        <button type="submit">Add User</button>
-      </form>
-      
-      <form onSubmit={handleMsgSubmit}>
-        <Child messageInput={messageInput} onMessageChange={setMessageInput} />
-        <button type="submit">Enter Msg</button>
-      </form>
-
-      <button onClick={addWarmUpUser}>Warm-Up Add</button>
-
-      <button onClick={deleteAllWarmUp}>Warm-Up Delete All</button>
-
-      <button onClick={handleClick}>
-        Click Me
-      </button>
-      
-      <p>
-        <ul>
-          {users.map(user => (
-            <User 
-              key={user.id}
-              id={user.id}
-              name={user.name}
-              onDelete={deleteUser} 
-            />
-          ))}
-        </ul>
-      </p>
-
-      <img src={logo} className="App-logo" alt="logo" />
-
-      <p>
-        Edit <code>src/App.js</code> and save to reload.
-        Hello Joseph — React Day 3!
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-      <h1> 
-        My First React App!
-      </h1>
-      <Message />
-      <p>
-        {message} {/* variable 'message' is defined at the top of function App() with other 'useState' variables */}
-      </p>
+        <Route path="/users" element={<UsersPage headerMode={headerMode} showMessage={showMessage} backdropColor={backdropColor} toggleMessage={toggleMessage} toggleHeaderMode={toggleHeaderMode} 
+                                                toggleBackdrop={toggleBackdrop} users={users} nameInput={nameInput} onNameInputChange={setNameInput} onUserSubmit={handleUserSubmit}
+                                                onDeleteUser={deleteUser} onWarmUpAdd={addWarmUpUser} onWarmUpDeleteAll={deleteAllWarmUp}
+          />} 
+        />
+        <Route path="/messages" element={<MessagesPage headerMode={headerMode} showMessage={showMessage} backdropColor={backdropColor} toggleMessage={toggleMessage} toggleHeaderMode={toggleHeaderMode} 
+                                                      toggleBackdrop={toggleBackdrop} message={message} messageInput={messageInput} onMessageInputChange={setMessageInput} onMessageSubmit={handleMsgSubmit}
+          />} 
+        />
+      </Routes>
     </div>
   );
 }

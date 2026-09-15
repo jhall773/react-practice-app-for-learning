@@ -1,4 +1,4 @@
-function Child({ messageInput, onMessageChange }) {
+function InputMessage({ messageInput, onMessageChange }) {
   return (
     <input
       value={messageInput}
@@ -7,4 +7,4 @@ function Child({ messageInput, onMessageChange }) {
   );
 }
 
-export default Child;
+export default InputMessage;
