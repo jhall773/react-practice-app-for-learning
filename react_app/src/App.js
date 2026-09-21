@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import MessagesPage from './pages/MessagesPage';
 import UsersPage from './pages/UsersPage';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   // useState variables
@@ -111,6 +111,13 @@ function App() {
     setBackdrop(!backdropColor);
   }
 
+  // This function is used to test the backend API 'simple-api' by checking output in the console.
+  function testAPIFetch() {
+    fetch('http://localhost:3001/test')
+      .then(res => res.json())
+      .then(data => console.log("Backend says: " + JSON.stringify(data) + " at " + Date.now()))
+      .catch(err => console.error('Error:', err));
+  }
 
   return (
     <div>
@@ -131,6 +138,7 @@ function App() {
         />
         <Route path="/messages" element={<MessagesPage headerMode={headerMode} showMessage={showMessage} backdropColor={backdropColor} toggleMessage={toggleMessage} toggleHeaderMode={toggleHeaderMode} 
                                                       toggleBackdrop={toggleBackdrop} message={message} messageInput={messageInput} onMessageInputChange={setMessageInput} onMessageSubmit={handleMsgSubmit}
+                                                      testAPIFetch={testAPIFetch}
           />} 
         />
       </Routes>

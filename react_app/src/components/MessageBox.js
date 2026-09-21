@@ -1,5 +1,5 @@
 import InputMessage from './InputMessage.js'
-function MessageBox({ message, messageInput, onMessageInputChange, onMessageSubmit }) {
+function MessageBox({ message, messageInput, onMessageInputChange, onMessageSubmit, testAPIFetch }) {
   return (
     <div>
         {/* The "Enter Message" form */}
@@ -11,6 +11,7 @@ function MessageBox({ message, messageInput, onMessageInputChange, onMessageSubm
         {/* Display Message */}
         <p>{message}</p>
 
+        <button onClick={testAPIFetch}>Test simple-api Backend</button>
     </div>
   );
 }

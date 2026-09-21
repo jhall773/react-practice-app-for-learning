@@ -1,26 +1,25 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# --- React App ---
+react_app/node_modules/
+react_app/build/
+react_app/.env
+react_app/.env.local
+react_app/.env.development.local
+react_app/.env.production.local
 
-# dependencies
-/react_app/node_modules
-/simple_api/node_modules
-/.pnp
-.pnp.js
+# --- Backend API ---
+simple_api/node_modules/
+simple_api/.env
+simple_api/.env.local
 
-# testing
-/coverage
-
-# production
-/react_app/build
-
-# misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
+# --- Logs ---
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.log
 
-.vscode
+# --- System Files ---
+.DS_Store
+Thumbs.db
+
+# --- Editor ---
+.vscode/

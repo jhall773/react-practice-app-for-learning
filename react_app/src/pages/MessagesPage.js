@@ -11,7 +11,8 @@ function MessagesPage({
   message,
   messageInput,
   onMessageInputChange,
-  onMessageSubmit
+  onMessageSubmit,
+  testAPIFetch
 }) {
   return (
     <div className="App" style={{ backgroundColor: backdropColor ? "DodgerBlue" : "LimeGreen", minHeight: "120vh" }}>
@@ -30,7 +31,9 @@ function MessagesPage({
         messageInput={messageInput}
         onMessageInputChange={onMessageInputChange}
         onMessageSubmit={onMessageSubmit}
+        testAPIFetch={testAPIFetch}
       />
+
     </div>
   );
 }
